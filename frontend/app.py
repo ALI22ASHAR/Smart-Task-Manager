@@ -49,8 +49,6 @@ st.subheader("Dashboard")
 
 search = st.text_input("Search Tasks")
 
-col1, col2, col3 = st.columns(3)
-
 completed_count = len([t for t in tasks if t['completed']])
 pending_count = len([t for t in tasks if not t['completed']])
 high_priority = len([t for t in tasks if t['priority'] == 'High'])
@@ -59,19 +57,27 @@ filtered_tasks = [
     if search.lower() in task['title'].lower()
 ]
 
+metric_col1, metric_col2, metric_col3 = st.columns(3)
+
+metric_col1.metric("Completed", completed_count)
+metric_col2.metric("Pending", pending_count)
+metric_col3.metric("High Priority", high_priority)
+
+st.divider()
+
 # Display Tasks
 st.subheader("All Tasks")
 
 for task in filtered_tasks:
     with st.container(border=True):
-        col1, col2, col3 = st.columns([5, 2, 2])
+        task_col1, task_col2, task_col3 = st.columns([5, 2, 2])
 
-        with col1:
+        with task_col1:
             st.markdown(f"### {task['title']}")
             st.write(task['description'])
             st.write(f"Priority: {task['priority']}")
 
-        with col2:
+        with task_col2:
             if task['completed']:
                 st.success("Completed")
             else:
@@ -86,13 +92,7 @@ for task in filtered_tasks:
                     requests.put(f"{API_URL}{task['id']}/", json=update_payload)
                     st.rerun()
 
-        with col3:
+        with task_col3:
             if st.button(f"Delete {task['id']}"):
                 requests.delete(f"{API_URL}{task['id']}/")
                 st.rerun()
-
-col1.metric("Completed", completed_count)
-col2.metric("Pending", pending_count)
-col3.metric("High Priority", high_priority)
-
-st.divider()
