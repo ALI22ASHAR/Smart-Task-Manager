@@ -26,4 +26,3 @@ Additional notes:
 - Backend is a Django REST Framework API under the `backend/` folder.
 - Frontend is a Streamlit app at `frontend/app.py` that calls the API at `http://127.0.0.1:8000/api/tasks/`.
 
-If you want me to create a PR instead of merging directly, provide a GitHub PAT with `repo` scope or click "Create pull request" on GitHub.
