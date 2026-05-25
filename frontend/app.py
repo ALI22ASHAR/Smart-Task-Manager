@@ -11,7 +11,7 @@ st.title("Smart Task & Productivity Manager")
 # Sidebar
 st.sidebar.header("Create New Task")
 
-with st.sidebar.form("task_form"):
+with st.sidebar.form("task_form", clear_on_submit=True):
     title = st.text_input("Task Title")
     description = st.text_area("Description")
     priority = st.selectbox("Priority", ["Low", "Medium", "High"])
